@@ -13,19 +13,15 @@ function Header() {
             <img src={logoMBDS} alt="Logo MBDS" width={150} />
             <h1>Introduction a React</h1>         
             <h2>A la decouverte des premieres notions de React </h2>
-        </header>
-        
-    
+        </header> 
     );
-
 }
 
 function MainContent() {
     return (
         <main>
             <p>Ici, nous afficherons des informations interessantes :</p>
-        </main>
-    
+        </main>    
     );
 }
 
@@ -55,8 +51,7 @@ function App() {
         <>        
             <Header />      
             <MainContent />
-            <Footer />
-      
+            <Footer />      
     </>
   )
 }
