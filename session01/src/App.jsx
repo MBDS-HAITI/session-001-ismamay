@@ -27,19 +27,40 @@ function MainContent() {
         </main>
     
     );
-
 }
 
+function Footer() {
+    const firstName = "Ismael";
+    const lastName = "Romelus";
+    return (
+        <footer style={{
+            position: "fixed",
+            bottom: "20px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            textAlign: "center",
+            color: "white",
+            opacity: 0.7,
+            fontSize: "1rem",
+            width: "100%"
+        }} >
+            Tous droits reserves -{firstName} {lastName} &copy; 2025
+        </footer>
+    );
+}
 function App() {
   const [count, setCount] = useState(0)
 
     return (
         <>        
             <Header />      
-            <MainContent />          
+            <MainContent />
+            <Footer />
       
     </>
   )
 }
+
+
 
 export default App
