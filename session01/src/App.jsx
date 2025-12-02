@@ -6,6 +6,7 @@ import logoMBDS from './assets/mbds_logo_transparent.svg';
 import logo from './assets/logo.png';
 import data from './data/data.json';
 import StudentCard from './components/Student.jsx';
+import Menu from './components/Menu.jsx';
 
 
 function getRandomItem(list) {
@@ -64,13 +65,13 @@ function Footer() {
     );
 }
 function App() {
-    const randomStudent = getRandomItem(data);
-    console.log(randomStudent);
+    const randomStudent = getRandomItem(data);   
+
     return (
-        <>        
-            <Header />      
-          
-            <StudentCard item={randomStudent} />
+        <>
+            <Menu/>
+              
+     
             <Footer />      
     </>
   )
