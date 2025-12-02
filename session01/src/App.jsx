@@ -4,6 +4,14 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import logoMBDS from './assets/mbds_logo_transparent.svg';
 import logo from './assets/logo.png';
+import data from './data/data.json';
+import StudentCard from './components/Student.jsx';
+
+
+function getRandomItem(list) {
+    const index = Math.floor(Math.random() * list.length);
+    return list[index];
+}
 
 
 
@@ -56,11 +64,13 @@ function Footer() {
     );
 }
 function App() {
-
+    const randomStudent = getRandomItem(data);
+    console.log(randomStudent);
     return (
         <>        
             <Header />      
-            <MainContent />
+          
+            <StudentCard item={randomStudent} />
             <Footer />      
     </>
   )
