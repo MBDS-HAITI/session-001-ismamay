@@ -36,6 +36,7 @@ function MainContent() {
 }
 
 function Footer() {
+   const year = new Date().getFullYear();
     const firstName = "Ismael";
     const lastName = "Romelus";
     return (
@@ -50,7 +51,7 @@ function Footer() {
             fontSize: "1rem",
             width: "100%"
         }} >
-            Tous droits reserves -{firstName} {lastName} &copy; 2025
+            &copy; {year} - {firstName} {lastName}, Tous droits reserves 
         </footer>
     );
 }
