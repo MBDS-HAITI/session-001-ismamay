@@ -2,11 +2,15 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import logoMBDS from './assets/mbds_logo_transparent.svg';
-import logo from './assets/logo.png';
+import './data/Index.css';
+
 import data from './data/data.json';
 import StudentCard from './components/Student.jsx';
 import Menu from './components/Menu.jsx';
+import Footer from './components/Footer.jsx';
+import MenuContent from './components/MenuContent.jsx';
+import MainContent from './components/MainContent.jsx';
+import Header from './components/Header.jsx';
 
 
 function getRandomItem(list) {
@@ -16,65 +20,27 @@ function getRandomItem(list) {
 
 
 
-function Header() {
-    return (
-        <header>
-            <img src={logoMBDS} alt="Logo MBDS" width={150} />
-            <h1>Introduction a React</h1>         
-            <h2>A la decouverte des premieres notions de React </h2>
-        </header> 
-    );
-}
-
-function MainContent() {
-    const now = new Date();
-    const day = new Intl.DateTimeFormat("fr-FR", { weekday: "long" }).format(now);
-    const month = new Intl.DateTimeFormat("fr-FR", { month: "long" }).format(now);
-    const year = now.getFullYear();
-    const time = new Intl.DateTimeFormat("fr-FR", {
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit"
-    }).format(now);
-
-    return (
-        <main>
-            <p>Bonjour, on est le {day} {now.getDate()}  {month} {year} et il est {time}</p>
-        </main>    
-    );
-}
-
-function Footer() {
-   const year = new Date().getFullYear();
-    const firstName = "Ismael";
-    const lastName = "Romelus";
-    return (
-        <footer style={{
-            position: "fixed",
-            bottom: "20px",
-            left: "50%",
-            transform: "translateX(-50%)",
-            textAlign: "center",
-            color: "white",
-            opacity: 0.7,
-            fontSize: "1rem",
-            width: "100%"
-        }} >
-            &copy; {year} - {firstName} {lastName}, Tous droits reserves 
-        </footer>
-    );
-}
 function App() {
-    const randomStudent = getRandomItem(data);   
+
+    const [selectedItem, setSelectedItem] = useState("Notes");
+
+    function getRandomItem(list) {
+        const index = Math.floor(Math.random() * list.length);
+        return list[index];
+    }
+
+    const randomStudent = getRandomItem(data);
 
     return (
-        <>
-            <Menu/>
-              
-     
-            <Footer />      
-    </>
-  )
+        <div>
+         
+            <Menu selected={selectedItem} onSelect={setSelectedItem} />
+
+            <MenuContent selected={selectedItem} />            
+
+            <Footer />
+        </div>
+    );
 }
 
 
