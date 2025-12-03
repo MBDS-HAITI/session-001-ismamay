@@ -1,13 +1,13 @@
+import NotesTable from './NotesTable';
+import StudentsTable from './StudentsTable';
+import CoursesTable from './CoursesTable';
 
+function MenuContent({ selected, data }) {
+    if (selected === "Notes") return <NotesTable data={data} />;
+    if (selected === "Etudiants") return <StudentsTable data={data} />;
+    if (selected === "Matieres") return <CoursesTable data={data} />;
+    
+    return <p style={{ textAlign: "center", marginTop: "100px" }}>Petite application developee dans le cadre de mon cours sur React JS</p>;
 
-function MenuContent({ selected }) {
-    return (
-        <div style={{ textAlign: "center", marginTop: "150px" }}>
-            {selected === "Notes" && <p>Voici la section des Notes</p>}
-            {selected === "Etudiants" && <p>Liste des Etudiants</p>}
-            {selected === "Matieres" && <p>Liste des Matieres</p>}
-            {selected === "A propos" && <p>Application React realisee par le goat</p>}
-        </div>
-    );
 }
 export default MenuContent;

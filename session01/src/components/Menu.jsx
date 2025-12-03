@@ -1,8 +1,6 @@
 import './Menu.css'; 
 
 
-import './Menu.css';
-
 function Menu({ selected, onSelect }) {
 
     const items = ["Notes", "Etudiants", "Matieres", "A propos"];
