@@ -7,7 +7,7 @@ function MenuContent({ selected, data }) {
     if (selected === "Etudiants") return <StudentsTable data={data} />;
     if (selected === "Matieres") return <CoursesTable data={data} />;
     
-    return <p style={{ textAlign: "center", marginTop: "100px" }}>Petite application developee dans le cadre de mon cours sur React JS</p>;
+    return <p style={{ textAlign: "center", marginTop: "100px" }}>Ce projet est realise par Ismael Romelus, Decembre 2025 !!!</p>;
 
 }
 export default MenuContent;
