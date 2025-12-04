@@ -9,19 +9,16 @@ import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
 import { useState } from 'react';
 
-
 function StudentsTable({ data }) {
 
-   
-    const students = data.map(item => item.student);
 
-    
+    const students = data;
+
     const [search, setSearch] = useState("");
     const [order, setOrder] = useState("asc");
-    const [orderBy, setOrderBy] = useState("lastname");
+    const [orderBy, setOrderBy] = useState("lastName");
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-
 
     const handleSort = (column) => {
         const isAsc = orderBy === column && order === "asc";
@@ -29,24 +26,25 @@ function StudentsTable({ data }) {
         setOrderBy(column);
     };
 
-
+    
     const filtered = students.filter(s =>
-        (s.firstname + " " + s.lastname + " " + s.id)
+        (`${s.firstName} ${s.lastName} ${s._id}`)
             .toLowerCase()
             .includes(search.toLowerCase())
     );
 
-
     const sorted = filtered.sort((a, b) => {
-        if (a[orderBy] < b[orderBy]) return order === "asc" ? -1 : 1;
-        if (a[orderBy] > b[orderBy]) return order === "asc" ? 1 : -1;
+        const valA = a[orderBy]?.toString().toLowerCase();
+        const valB = b[orderBy]?.toString().toLowerCase();
+
+        if (valA < valB) return order === "asc" ? -1 : 1;
+        if (valA > valB) return order === "asc" ? 1 : -1;
         return 0;
     });
 
     return (
         <div className="fade-in">
 
-            {}
             <input
                 type="text"
                 placeholder="Rechercher un etudiant..."
@@ -64,9 +62,9 @@ function StudentsTable({ data }) {
 
                             <TableCell>
                                 <TableSortLabel
-                                    active={orderBy === "id"}
+                                    active={orderBy === "_id"}
                                     direction={order}
-                                    onClick={() => handleSort("id")}
+                                    onClick={() => handleSort("_id")}
                                 >
                                     ID
                                 </TableSortLabel>
@@ -74,9 +72,9 @@ function StudentsTable({ data }) {
 
                             <TableCell>
                                 <TableSortLabel
-                                    active={orderBy === "lastname"}
+                                    active={orderBy === "lastName"}
                                     direction={order}
-                                    onClick={() => handleSort("lastname")}
+                                    onClick={() => handleSort("lastName")}
                                 >
                                     Nom
                                 </TableSortLabel>
@@ -84,9 +82,9 @@ function StudentsTable({ data }) {
 
                             <TableCell>
                                 <TableSortLabel
-                                    active={orderBy === "firstname"}
+                                    active={orderBy === "firstName"}
                                     direction={order}
-                                    onClick={() => handleSort("firstname")}
+                                    onClick={() => handleSort("firstName")}
                                 >
                                     Prenom
                                 </TableSortLabel>
@@ -98,18 +96,17 @@ function StudentsTable({ data }) {
                     <TableBody>
                         {sorted
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((s, index) => (
-                                <TableRow key={index}>
-                                    <TableCell>{s.id}</TableCell>
-                                    <TableCell>{s.lastname}</TableCell>
-                                    <TableCell>{s.firstname}</TableCell>
+                            .map((s) => (
+                                <TableRow key={s._id}>
+                                    <TableCell>{s._id}</TableCell>
+                                    <TableCell>{s.lastName}</TableCell>
+                                    <TableCell>{s.firstName}</TableCell>
                                 </TableRow>
                             ))}
                     </TableBody>
 
                 </Table>
 
-                {}
                 <TablePagination
                     component="div"
                     rowsPerPageOptions={[5, 10, 20]}

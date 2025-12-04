@@ -11,9 +11,7 @@ import { useState } from 'react';
 
 function CoursesTable({ data }) {
 
-  
-    const courses = [...new Set(data.map(item => item.course))]
-        .map((name, index) => ({ id: index + 1, name }));
+    const uniqueCourses = data;
 
     const [search, setSearch] = useState("");
     const [order, setOrder] = useState("asc");
@@ -27,13 +25,17 @@ function CoursesTable({ data }) {
         setOrderBy(col);
     };
 
-    const filtered = courses.filter(c =>
-        c.name.toLowerCase().includes(search.toLowerCase())
+    const filtered = uniqueCourses.filter(c =>
+        c.name.toLowerCase().includes(search.toLowerCase()) ||
+        c.code.toLowerCase().includes(search.toLowerCase())
     );
 
     const sorted = filtered.sort((a, b) => {
-        if (a[orderBy] < b[orderBy]) return order === "asc" ? -1 : 1;
-        if (a[orderBy] > b[orderBy]) return order === "asc" ? 1 : -1;
+        const valA = a[orderBy]?.toString().toLowerCase();
+        const valB = b[orderBy]?.toString().toLowerCase();
+
+        if (valA < valB) return order === "asc" ? -1 : 1;
+        if (valA > valB) return order === "asc" ? 1 : -1;
         return 0;
     });
 
@@ -43,7 +45,7 @@ function CoursesTable({ data }) {
             <input
                 type="text"
                 className="search-bar"
-                placeholder="Rechercher matiere..."
+                placeholder="Rechercher une matiere..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
             />
@@ -55,7 +57,15 @@ function CoursesTable({ data }) {
                     <TableHead>
                         <TableRow>
 
-                            <TableCell>ID</TableCell>
+                            <TableCell>
+                                <TableSortLabel
+                                    active={orderBy === "_id"}
+                                    direction={order}
+                                    onClick={() => handleSort("_id")}
+                                >
+                                    ID
+                                </TableSortLabel>
+                            </TableCell>
 
                             <TableCell>
                                 <TableSortLabel
@@ -67,6 +77,16 @@ function CoursesTable({ data }) {
                                 </TableSortLabel>
                             </TableCell>
 
+                            <TableCell>
+                                <TableSortLabel
+                                    active={orderBy === "code"}
+                                    direction={order}
+                                    onClick={() => handleSort("code")}
+                                >
+                                    Code
+                                </TableSortLabel>
+                            </TableCell>
+
                         </TableRow>
                     </TableHead>
 
@@ -74,9 +94,10 @@ function CoursesTable({ data }) {
                         {sorted
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((c) => (
-                                <TableRow key={c.id}>
-                                    <TableCell>{c.id}</TableCell>
+                                <TableRow key={c._id}>
+                                    <TableCell>{c._id}</TableCell>
                                     <TableCell>{c.name}</TableCell>
+                                    <TableCell>{c.code}</TableCell>
                                 </TableRow>
                             ))}
                     </TableBody>
@@ -102,3 +123,4 @@ function CoursesTable({ data }) {
 }
 
 export default CoursesTable;
+

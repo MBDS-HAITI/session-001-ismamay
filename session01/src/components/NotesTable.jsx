@@ -4,15 +4,12 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import TableSortLabel from "@mui/material/TableSortLabel";
+import TableSortLabel from '@mui/material/TableSortLabel';
 import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
 import { useState } from 'react';
 
-
 function NotesTable({ data }) {
-
-    const notes = data; 
 
     const [search, setSearch] = useState("");
     const [order, setOrder] = useState("asc");
@@ -20,21 +17,26 @@ function NotesTable({ data }) {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
-    const handleSort = (col) => {
-        const isAsc = orderBy === col && order === "asc";
+    const handleSort = (column) => {
+        const isAsc = orderBy === column && order === "asc";
         setOrder(isAsc ? "desc" : "asc");
-        setOrderBy(col);
+        setOrderBy(column);
     };
 
-    const filtered = notes.filter(n =>
-        (n.student.firstname + n.student.lastname + n.course)
+
+    const filtered = data.filter(item =>
+        (`${item.student?.firstName ?? ""} ${item.student?.lastName ?? ""} ${item.course?.name ?? ""} ${item.grade}`)
             .toLowerCase()
             .includes(search.toLowerCase())
     );
 
+
     const sorted = filtered.sort((a, b) => {
-        if (a[orderBy] < b[orderBy]) return order === "asc" ? -1 : 1;
-        if (a[orderBy] > b[orderBy]) return order === "asc" ? 1 : -1;
+        const valA = a[orderBy];
+        const valB = b[orderBy];
+
+        if (valA < valB) return order === "asc" ? -1 : 1;
+        if (valA > valB) return order === "asc" ? 1 : -1;
         return 0;
     });
 
@@ -42,39 +44,29 @@ function NotesTable({ data }) {
         <div className="fade-in">
 
             <input
-                className="search-bar"
+                type="text"
                 placeholder="Rechercher..."
+                className="search-bar"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
             />
 
-            <TableContainer component={Paper} className="table-container">
+            <TableContainer component={Paper} className="table-card">
 
                 <Table>
-
                     <TableHead>
                         <TableRow>
 
                             <TableCell>
-                                <TableSortLabel
-                                    active={orderBy === "course"}
-                                    direction={order}
-                                    onClick={() => handleSort("course")}
-                                >
-                                    Matiere
-                                </TableSortLabel>
+                                Matiere
                             </TableCell>
 
-                            <TableCell>Etudiant</TableCell>
+                            <TableCell>
+                                Etudiant
+                            </TableCell>
 
                             <TableCell>
-                                <TableSortLabel
-                                    active={orderBy === "date"}
-                                    direction={order}
-                                    onClick={() => handleSort("date")}
-                                >
-                                    Date
-                                </TableSortLabel>
+                                Date
                             </TableCell>
 
                             <TableCell>
@@ -93,12 +85,21 @@ function NotesTable({ data }) {
                     <TableBody>
                         {sorted
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((n, i) => (
-                                <TableRow key={i}>
-                                    <TableCell>{n.course}</TableCell>
-                                    <TableCell>{n.student.firstname} {n.student.lastname}</TableCell>
-                                    <TableCell>{n.date}</TableCell>
-                                    <TableCell>{n.grade}</TableCell>
+                            .map((item) => (
+                                <TableRow key={item._id}>
+
+                                    <TableCell>{item.course?.name}</TableCell>
+
+                                    <TableCell>
+                                        {item.student?.firstName} {item.student?.lastName}
+                                    </TableCell>
+
+                                    <TableCell>
+                                        {new Date(item.date).toISOString().substring(0, 10)}
+                                    </TableCell>
+
+                                    <TableCell>{item.grade}</TableCell>
+
                                 </TableRow>
                             ))}
                     </TableBody>
@@ -109,15 +110,14 @@ function NotesTable({ data }) {
                     component="div"
                     rowsPerPageOptions={[5, 10, 20]}
                     count={sorted.length}
-                    page={page}
                     rowsPerPage={rowsPerPage}
+                    page={page}
                     onPageChange={(e, p) => setPage(p)}
                     onRowsPerPageChange={(e) => {
                         setRowsPerPage(parseInt(e.target.value, 10));
                         setPage(0);
                     }}
                 />
-
             </TableContainer>
         </div>
     );

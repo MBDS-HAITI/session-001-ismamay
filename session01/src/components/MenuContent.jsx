@@ -1,13 +1,22 @@
-import NotesTable from './NotesTable';
-import StudentsTable from './StudentsTable';
-import CoursesTable from './CoursesTable';
+import NotesTable from "./NotesTable";
+import StudentsTable from "./StudentsTable";
+import CoursesTable from "./CoursesTable";
 
-function MenuContent({ selected, data }) {
-    if (selected === "Notes") return <div className="fade-in">  <NotesTable data={data} /></div>;
-    if (selected === "Etudiants") return <div className="fade-in"> <StudentsTable data={data} /> </div>;
-    if (selected === "Matieres") return <CoursesTable data={data} />;
+function MenuContent({ selected, grades, students, courses }) {
 
-    return <p className="fade-in" style={{ textAlign: "center", marginTop: "100px" }}>Ce projet est realise par Ismael Romelus, Decembre 2025 !!!</p>;
+    if (selected === "Notes") {
+        return <NotesTable data={grades} />;
+    }
 
+    if (selected === "Etudiants") {
+        return <StudentsTable data={students} />;
+    }
+
+    if (selected === "Matieres") {
+        return <CoursesTable data={courses} />;
+    }
+
+    return <div style={{ padding: "20px" }}>Application en construction</div>;
 }
+
 export default MenuContent;
