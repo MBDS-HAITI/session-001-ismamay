@@ -8,9 +8,10 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function CoursesTable({ data }) {
-
+    const navigate = useNavigate();
     const uniqueCourses = data;
 
     const [search, setSearch] = useState("");
@@ -87,6 +88,11 @@ function CoursesTable({ data }) {
                                 </TableSortLabel>
                             </TableCell>
 
+                            <TableCell align="center">
+                                Actions
+                            </TableCell>
+
+
                         </TableRow>
                     </TableHead>
 
@@ -98,6 +104,15 @@ function CoursesTable({ data }) {
                                     <TableCell>{c._id}</TableCell>
                                     <TableCell>{c.name}</TableCell>
                                     <TableCell>{c.code}</TableCell>
+                                    <TableCell align="center">
+                                        <button
+                                            className="details-btn"
+                                            onClick={() => navigate(`/courses/${c._id}`)}
+                                        >
+                                            View Details
+                                        </button>
+                                    </TableCell>
+
                                 </TableRow>
                             ))}
                     </TableBody>

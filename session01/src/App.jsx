@@ -5,6 +5,9 @@ import './data/Index.css';
 import Menu from './components/Menu.jsx';
 import Footer from './components/Footer.jsx';
 import MenuContent from './components/MenuContent.jsx';
+import Navigation from './components/Navigation.jsx';
+import { Routes, Route } from "react-router-dom";
+import{ Link } from 'react-router-dom';
 
 function App() {
 
@@ -32,14 +35,13 @@ function App() {
     }, []);
 
     return (
-        <>           
-            <Menu selected={selected} onSelect={setSelected} />         
-            <MenuContent
-                selected={selected}
-                grades={gradesData}
-                students={studentsData}
-                courses={coursesData}
-            />                       
+        <>
+            <Navigation
+                coursesData={coursesData}
+                studentsData={studentsData}
+                gradesData={gradesData}
+            />
+                            
             <Footer />
         </>
     );
